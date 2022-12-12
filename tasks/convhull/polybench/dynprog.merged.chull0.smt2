@@ -1,0 +1,5 @@
+(declare-const delta_k Int)
+(assert (exists ((|k'?1| Int) (k?2 Int) (j?3 Int))
+         (and (< (- k?2) 0) (< (- j?3) 0) (<= (+ (- j?3) k?2 1) 0)
+                (= (+ |k'?1| (- k?2) -1) 0) (= delta_k (+ |k'?1| (- k?2))))))
+(check-sat)

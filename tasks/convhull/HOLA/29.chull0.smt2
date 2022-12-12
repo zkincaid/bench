@@ -1,0 +1,12 @@
+(declare-const delta_b Int)
+(declare-const delta_tmp Int)
+(declare-const delta_c Int)
+(assert (exists
+         ((|tmp'?1| Int) (|c'?2| Int) (|b'?3| Int) (havoc?4 Int) (tmp?5 Int)
+            (b?6 Int) (c?7 Int))
+         (and (= (+ b?6 (- c?7) 1) 0) (or (< havoc?4 0) (< 0 havoc?4))
+                (= (+ |tmp'?1| (- havoc?4)) 0) (= (+ |c'?2| (- c?7) 1) 0)
+                (= (+ |b'?3| (- b?6) 1) 0) (= delta_b (+ |b'?3| (- b?6)))
+                (= delta_c (+ |c'?2| (- c?7)))
+                (= delta_tmp (+ |tmp'?1| (- tmp?5))))))
+(check-sat)

@@ -1,0 +1,6 @@
+(declare-const delta_cnt Int)
+(assert (exists ((|cnt'?1| Int) (length?2 Int) (cnt?3 Int))
+         (and (< (- cnt?3) 0) (<= (+ (- length?2) cnt?3 1) 0)
+                (= (+ |cnt'?1| (- cnt?3) -1) 0)
+                (= delta_cnt (+ |cnt'?1| (- cnt?3))))))
+(check-sat)

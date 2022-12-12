@@ -1,0 +1,5 @@
+(declare-const delta_x Int)
+(assert (exists ((|x'?1| Int) (n?2 Int) (x?3 Int))
+         (and (<= (- x?3) 0) (< (+ (- n?2) x?3) 0)
+                (= (+ |x'?1| (- x?3) -1) 0) (= delta_x (+ |x'?1| (- x?3))))))
+(check-sat)

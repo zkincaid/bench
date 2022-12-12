@@ -1,0 +1,12 @@
+(declare-const delta_tmp___1 Int)
+(declare-const delta_y Int)
+(assert (exists
+         ((|tmp___1'?1| Int) (|y'?2| Int) (phi_y?3 Int) (havoc?4 Int)
+            (tmp___1?5 Int) (x?6 Int) (y?7 Int))
+         (and (or (< havoc?4 0) (< 0 havoc?4))
+                (or (and (< (- x?6) 0) (= (+ (- phi_y?3) y?7 x?6) 0))
+                      (and (<= x?6 0) (= (+ (- phi_y?3) y?7) 0)))
+                (= (+ |tmp___1'?1| (- havoc?4)) 0)
+                (= (+ |y'?2| (- phi_y?3)) 0) (= delta_y (+ |y'?2| (- y?7)))
+                (= delta_tmp___1 (+ |tmp___1'?1| (- tmp___1?5))))))
+(check-sat)

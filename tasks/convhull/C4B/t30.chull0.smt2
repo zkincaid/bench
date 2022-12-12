@@ -1,0 +1,12 @@
+(declare-const delta___cost Int)
+(declare-const delta_y Int)
+(declare-const delta_x Int)
+(assert (exists
+         ((|y'?1| Int) (|x'?2| Int) (|__cost'?3| Int) (y?4 Int) (x?5 Int)
+            (__cost?6 Int))
+         (and (< (- x?5) 0) (<= (- __cost?6) 0) (<= (+ (- __cost?6) -1) 0)
+                (= (+ |y'?1| (- x?5) 1) 0) (= (+ (- y?4) |x'?2|) 0)
+                (= (+ |__cost'?3| (- __cost?6) -1) 0)
+                (= delta___cost (+ |__cost'?3| (- __cost?6)))
+                (= delta_x (+ |x'?2| (- x?5))) (= delta_y (+ |y'?1| (- y?4))))))
+(check-sat)

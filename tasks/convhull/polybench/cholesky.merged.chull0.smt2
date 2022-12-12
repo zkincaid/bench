@@ -1,0 +1,10 @@
+(declare-const delta_x Real)
+(declare-const delta_k Int)
+(assert (exists
+         ((uninterp?1 Int) (|x'?2| Real) (|k'?3| Int) (k?4 Int) (x?5 Real)
+            (i?6 Int))
+         (and (<= (- k?4) 0) (<= (- i?6) 0) (<= (+ (- i?6) k?4 1) 0)
+                (= (+ uninterp?1 (- x?5) |x'?2|) 0)
+                (= (+ |k'?3| (- k?4) -1) 0) (= delta_k (+ |k'?3| (- k?4)))
+                (= delta_x (+ |x'?2| (- x?5))))))
+(check-sat)

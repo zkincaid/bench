@@ -1,0 +1,6 @@
+(declare-const delta_i2 Int)
+(assert (exists ((|i2'?1| Int) (i2?2 Int) (n?3 Int))
+         (and (<= (- i2?2) 0) (< (+ (- n?3) i2?2) 0)
+                (= (+ |i2'?1| (- i2?2) -1) 0)
+                (= delta_i2 (+ |i2'?1| (- i2?2))))))
+(check-sat)

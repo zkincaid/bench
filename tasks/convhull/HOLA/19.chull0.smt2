@@ -1,0 +1,12 @@
+(declare-const delta_x Int)
+(declare-const delta_y Int)
+(assert (exists
+         ((|y'?1| Int) (|x'?2| Int) (phi_y?3 Int) (y?4 Int) (x?5 Int)
+            (m?6 Int) (n?7 Int))
+         (and (<= (- y?4) 0) (<= (- x?5) 0) (<= (- m?6) 0) (< (- n?7) 0)
+                (< (+ (- n?7) x?5) 0)
+                (or (and (< (+ m?6 (- x?5) -1) 0) (= (+ (- phi_y?3) y?4 1) 0))
+                      (and (<= (+ (- m?6) x?5 1) 0) (= (+ (- phi_y?3) y?4) 0)))
+                (= (+ |y'?1| (- phi_y?3)) 0) (= (+ |x'?2| (- x?5) -1) 0)
+                (= delta_x (+ |x'?2| (- x?5))) (= delta_y (+ |y'?1| (- y?4))))))
+(check-sat)
