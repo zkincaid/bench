@@ -1,0 +1,6 @@
+tasks/sv-benchmarks/
+results/
+svcomp.lock
+*~
+*.dat
+__pycache__

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 3.30//EN" "https://www.sosy-lab.org/benchexec/benchmark-3.30.dtd">
+<benchmark tool="tools.duet_safety" displayName="Duet" timelimit="15min">
+  <rundefinition name="CRA">
+    <option name="-cra" />
+    <option name="-cra-split-loops" />
+  </rundefinition>
+  <rundefinition name="CRAM">
+    <option name="-cra" />
+    <option name="-monotone" />
+    <option name="-theory">LIRA</option>
+    <option name="-cra-split-loops" />
+  </rundefinition>
+  <rundefinition name="LIRR">
+    <option name="-cra" />
+    <option name="-monotone" />
+    <option name="-lirr" />
+    <option name="-theory">LIRR</option>
+    <option name="-lirr-sp-quad" />
+  </rundefinition>
+  <tasks name="C4B">
+    <include>../tasks/C4B/*.yml</include>
+    <propertyfile>../properties/unreach-call.prp</propertyfile>
+  </tasks>
+  <tasks name="HOLA">
+    <include>../tasks/HOLA/*.yml</include>
+    <propertyfile>../properties/unreach-call.prp</propertyfile>
+  </tasks>
+  <tasks name="NLA">
+    <include>../tasks/nla-digbench-post/*.yml</include>
+    <propertyfile>../tasks/properties/unreach-call.prp</propertyfile>
+  </tasks>
+  <tasks name="Loops">
+    <includesfile>../tasks/sv-benchmarks/c/Loops.set</includesfile>
+    <propertyfile>../tasks/sv-benchmarks/c/properties/unreach-call.prp</propertyfile>
+  </tasks>
+  <tasks name="IntLoops">
+    <includesfile>../tasks/IntLoops.set</includesfile>
+    <propertyfile>../tasks/sv-benchmarks/c/properties/unreach-call.prp</propertyfile>
+  </tasks>
+</benchmark>

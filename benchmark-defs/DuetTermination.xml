@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 3.30//EN" "https://www.sosy-lab.org/benchexec/benchmark-3.30.dtd">
+<benchmark tool="tools.compact" displayName="Duet Termination" timelimit="15min">
+  <option name="-monotone" />
+  <option name="-termination" />
+  <rundefinition name="ComPACT">
+    <option name="-termination-no-attractor" />
+    <option name="-termination-no-dta" />
+  </rundefinition>
+  <rundefinition name="Combined">
+    <option name="-termination-no-attractor" />
+  </rundefinition>
+  <rundefinition name="BLACT">
+    <option name="-termination-no-phase" />
+    <option name="-termination-no-exp" />
+    <option name="-termination-no-attractor" />
+    <option name="-termination-no-llrf" />
+  </rundefinition>
+  <rundefinition name="ComPACT-exp-only-no-phase">
+    <option name="-termination-no-phase" />
+    <option name="-termination-no-dta" />
+    <option name="-termination-no-llrf" />
+  </rundefinition>
+  <rundefinition name="ComPACT-exp-only-with-phase">
+    <option name="-termination-no-dta" />
+    <option name="-termination-no-llrf" />
+  </rundefinition>
+  <rundefinition name="ComPACT-llrf-only-no-phase">
+    <option name="-termination-no-phase" />
+    <option name="-termination-no-exp" />
+    <option name="-termination-no-dta" />
+    <option name="-termination-no-attractor" />
+  </rundefinition>
+  <rundefinition name="ComPACT-llrf-only-with-phase">
+    <option name="-termination-no-exp" />
+    <option name="-termination-no-dta" />
+    <option name="-termination-no-attractor" />
+  </rundefinition>
+  <tasks name="ControlFlow-Termination">
+    <includesfile>../tasks/sv-benchmarks/c/ControlFlow-Termination.set</includesfile>
+    <propertyfile>../tasks/sv-benchmarks/c/properties/termination.prp</propertyfile>
+  </tasks>
+  <tasks name="polybench">
+    <includesfile>../tasks/polybench.set</includesfile>
+    <propertyfile>../tasks/properties/termination.prp</propertyfile>
+  </tasks>
+  <tasks name="bitprecise">
+    <includesfile>../tasks/bitprecise.set</includesfile>
+    <propertyfile>../tasks/properties/termination.prp</propertyfile>
+  </tasks>
+  <tasks name="recursive">
+    <includesfile>../tasks/recursive.set</includesfile>
+    <propertyfile>../tasks/properties/termination.prp</propertyfile>
+  </tasks>
+  <tasks name="termination_linear">
+    <includesfile>../tasks/termination_linear.set</includesfile>
+    <propertyfile>../tasks/properties/termination.prp</propertyfile>
+  </tasks>
+</benchmark>

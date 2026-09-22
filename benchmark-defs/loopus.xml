@@ -4,13 +4,9 @@
            displayName="Loopus"
            timelimit="15min">
   <rundefinition>
-    <tasks name="Termination">
-      <includesfile>../tasks/termination.set</includesfile>
-      <propertyfile>../tasks/properties/termination.prp</propertyfile>
-    </tasks>
-    <tasks name="Nontermination">
-      <includesfile>../tasks/nontermination.set</includesfile>
-      <propertyfile>../tasks/properties/termination.prp</propertyfile>
+    <tasks name="ControlFlow-Termination">
+      <includesfile>../tasks/sv-benchmarks/c/ControlFlow-Termination.set</includesfile>
+      <propertyfile>../tasks/sv-benchmarks/c/properties/termination.prp</propertyfile>
     </tasks>
   </rundefinition>
   <tasks name="polybench">

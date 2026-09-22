@@ -9,12 +9,13 @@
 
 <rundefinition name="invgen-all">
     <tasks name="NLA">
-       <includesfile>../tasks/reach_safety_loops_nla.set</includesfile>
-      <propertyfile>../tasks/properties/unreach-call.prp</propertyfile>
+      <include>../tasks/sv-benchmarks/c/nla-digbench/*.yml</include>
+      <include>../tasks/sv-benchmarks/c/nla-digbench-scaling/*.yml</include>
+      <propertyfile>../tasks/sv-benchmarks/c/properties/unreach-call.prp</propertyfile>
     </tasks>
-    <tasks name="loops">
-      <includesfile>../tasks/reach_safety_loops.set</includesfile>
-      <propertyfile>../tasks/properties/unreach-call.prp</propertyfile>
+    <tasks name="Loops">
+      <includesfile>../tasks/sv-benchmarks/c/Loops.set</includesfile>
+      <propertyfile>../tasks/sv-benchmarks/c/properties/unreach-call.prp</propertyfile>
     </tasks>
 </rundefinition>
   

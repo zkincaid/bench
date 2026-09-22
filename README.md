@@ -1,98 +1,78 @@
-Bench
-=====
+# Bench
 
-This directory contains [benchexec](https://github.com/sosy-lab/benchexec)
-scripts to simplify benchmarking and generating tables and plots.
+Scripts for managing benchmark tasks, running tools with BenchExec, and
+analyzing named results.
 
+## Requirements
 
-Building
---------
+- [BenchExec](https://github.com/sosy-lab/benchexec)
+- [PyYAML](https://pyyaml.org/), installed with
+  `python -m pip install PyYAML`
+- Benchmarked tools available in `PATH`
 
-Prior to using `bench.py`,
+## Task management
 
-1. [benchexec](https://github.com/sosy-lab/benchexec) must be installed.
-2. Any additional tools must be available in `PATH` so that benchexec can find them.
+`task.py` owns benchmark acquisition and subset construction:
 
-Note that `benchexec` may require that several permissions be set
-before it can execute.
-
-Usage
------
-
-`bench.py` has the following commands
-
-* `run`
-   Runs selected tools on selected benchmark suites.  By default, runs are cached.
-   * `--timeout` specifies timeout in seconds
-   * `--no-cache` forces the run, even if a result is in the cache
-* `scatter`
-   Generate scatter plot data along with accompanying LaTeX code.  Two tools must be
-   specified using `--tools`
-* `cactus`
-   Generate cactus plot data along with accompanying LaTeX code
-* `table`
-   Generate html benchmark data
-* `summary`
-   Generate summary data along as a LaTeX table
-
-All commands can be configured with the flags
-
-* `--tools TOOL1,TOOL2,...`
-* `--suites SUITE1,SUITE2,...`
-
-which specify the set of tools and suites, respectively.
-
-### Sample usage
-
- Run CRA and VASS on the C4B and HOLA suites, with a timeout of 30 seconds:
-
-```
- ./bench.py run --tools CRA,VASS --suites C4B,HOLA --timeout 30
+```bash
+./task.py update-svcomp --release svcomp26
+./task.py fetch-svcomp --suites Loops,ControlFlow-Termination
+./task.py select --suites Loops --output tasks/IntLoops.set \
+  --verdict=True --floats=False
 ```
 
- Scatter plot of CRA vs VASS on the C4B suite
+Suite names correspond to the runsets available in the `c/<name>.set` files
+in SV-COMP (see [here](https://gitlab.com/sosy-lab/benchmarking/sv-benchmarks/)).
+Checked out SV-COMP tasks are stored in `tasks/sv-benchmarks` and metadata is recorded `svcomp.lock`. Changing releases clears
+the fetched set list, while fetching sets from the current release is additive.
 
+`select` accepts comma-separated input suites and arbitrary boolean category
+filters. Expected verdicts are read from task YAML; other categories are
+computed with `duet.exe -categorize`. Output paths are relative to the generated
+`.set` file.
+
+## Running tools
+
+`run.py` executes tool configurations and records named runs:
+
+```bash
+./run.py --tools CRA,CRAM --suites IntLoops --timeout 60
+./run.py --name before --tools CRA --suites IntLoops --timeout 60
 ```
- ./bench.py scatter --tools CRA,VASS --suites C4B
+
+Without `--name`, each tool configuration is also its run name. An explicit
+name requires exactly one tool. Repeating a command uses the result recorded in
+that run unless `--no-cache` is supplied. A run may accumulate multiple suites;
+each manifest represents exactly one tool configuration.
+
+Run manifests are stored in `results/runs/<name>.json`. Result XML remains in
+BenchExec's `results` directory.
+
+## Processing results
+
+`result.py` reads named manifests and BenchExec XML without invoking tools:
+
+```bash
+./result.py list
+./result.py show CRA
+./result.py summary --runs CRA,CRAM --suites IntLoops
+./result.py summary-by-verdict --runs CRA,CRAM --suites IntLoops
+./result.py scatter --runs CRA,CRAM --suites IntLoops
+./result.py cactus --runs CRA,CRAM --suites IntLoops
+./result.py table --runs CRA,CRAM --suites IntLoops
+./result.py compare --reference CRA --runs CRAM,OtherRun
 ```
 
- Generate LaTeX table for all available tools and all available suites
+If an analysis command omits `--suites`, it uses the suites common to every
+selected run. Run names are used as labels, so multiple executions of the same
+tool configuration can be compared directly. `compare` reports result-count
+deltas and geometric-mean and median speedups for each candidate relative to
+one reference run.
 
-```
- ./bench.py summary
-```
+Each script supports `-h` and `--help`.
 
-Tools and suites
-----------------
+## Benchmark definitions
 
-Benchmarks are defined in the `benchmark-defs` directory.  Each tool
-`TOOL` has a corresponding `TOOL.xml` file, the format of which is
-described
-[here](https://github.com/sosy-lab/benchexec/blob/master/doc/benchexec.md).
-Each `TOOL.xml` should define a set of task suites (`tasks`).
-`bench.py` can run `TOOL` on a `SUITE` only if `TOOL.xml` defines a
-task suite named `SUITE`.
-
-Benchmark tasks should be defined by [YAML](https://yaml.org/) files,
-formatted according to [benchexec specifications](https://github.com/sosy-lab/benchexec/blob/master/doc/task-definition-example.yml)
-
-Suite descriptions
-------------------
-
-* Termination: check termination for the non-recursive, terminating
-  benchmarks f rom SV-COMP20 Termination-MainControlFlow.set
-* Nontermination: check termination for the non-terminating benchmarks
-  from SV-COMP20 Termination-MainControlFlow.set + the recursive
-  folder
-* recursive: check termination for the recursive, terminating
-  benchmarks from SV-COMP20 Termination-MainControlFlow.set + the
-  recursive folder
-* polybench: check termination for the [Polyhedral Benchmark
-  suite](https://web.cse.ohio-state.edu/~pouchet.2/software/polybench/)
-* bitprecise: bit-precise variation of the Termination suite, minus
-  two benchmarks for which Ultimate Automizer was able to prove
-  non-termination (java_AG313 and SyntaxSupportPointer01-3).
-* termination-linear: check termination for non-recursive,
-  terminating benchmarks where there exists linear abstractions
-  of the original loops that terminate.
-  
+Tool definitions live in `benchmark-defs`. Duet configurations are named run
+definitions in `DuetSafety.xml` and `DuetTermination.xml`; their mapping is in
+`benchlib.py`. Other tools have their own BenchExec XML files.
