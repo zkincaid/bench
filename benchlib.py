@@ -17,6 +17,7 @@ DUET_CONFIGS = {
     "CRA": ("DuetSafety", "CRA"),
     "CRAM": ("DuetSafety", "CRAM"),
     "LIRR": ("DuetSafety", "LIRR"),
+    "CRAM-NoSplit": ("DuetSafety", "CRAM-NoSplit"),
     "ComPACT": ("DuetTermination", "ComPACT"),
     "Combined": ("DuetTermination", "Combined"),
     "BLACT": ("DuetTermination", "BLACT"),

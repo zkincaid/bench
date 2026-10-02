@@ -11,6 +11,11 @@
     <option name="-theory">LIRA</option>
     <option name="-cra-split-loops" />
   </rundefinition>
+  <rundefinition name="CRAM-NoSplit">
+    <option name="-cra" />
+    <option name="-monotone" />
+    <option name="-theory">LIRA</option>
+  </rundefinition>
   <rundefinition name="LIRR">
     <option name="-cra" />
     <option name="-monotone" />
